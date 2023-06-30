@@ -21,11 +21,11 @@ public class MoveTarget : MonoBehaviour
     
     private float f_x(float t)
     {
-        return (3 * Mathf.Sin(1.8f*t/1.5f) + 3.4f * Mathf.Sin(1.8f * t / 1.5f) + 2.5f * Mathf.Sin(1.82f * t / 1.5f) + 4.3f * Mathf.Sin(2.34f * t / 1.5f))/2f;
+        return (3 * Mathf.Sin(1.8f*t/3f) + 3.4f * Mathf.Sin(1.8f * t / 3f) + 2.5f * Mathf.Sin(1.82f * t / 3f) + 4.3f * Mathf.Sin(2.34f * t / 3f))/6f;
     }
     private float f_y(float t)
     {
-        return (3 * Mathf.Sin(1.1f * t / 1.5f) + 3.2f * Mathf.Sin(3.6f * t / 1.5f) + 3.8f * Mathf.Sin(2.5f * t / 1.5f) + 4.8f * Mathf.Sin(1.48f * t / 1.5f))/2.4f ;
+        return (3 * Mathf.Sin(1.1f * t /3f) + 3.2f * Mathf.Sin(3.6f * t / 3f) + 3.8f * Mathf.Sin(2.5f * t / 3f) + 4.8f * Mathf.Sin(1.48f * t / 3f))/7.2f ;
     }
     private float average_distance()
     {
