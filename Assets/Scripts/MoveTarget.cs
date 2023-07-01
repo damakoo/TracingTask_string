@@ -25,7 +25,7 @@ public class MoveTarget : MonoBehaviour
     }
     private float f_y(float t)
     {
-        return (3 * Mathf.Sin(1.1f * t /3f) + 3.2f * Mathf.Sin(3.6f * t / 3f) + 3.8f * Mathf.Sin(2.5f * t / 3f) + 4.8f * Mathf.Sin(1.48f * t / 3f))/7.2f ;
+        return ((3 * Mathf.Sin(1.1f * t /3f) + 3.2f * Mathf.Sin(3.6f * t / 3f) + 3.8f * Mathf.Sin(2.5f * t / 3f) + 4.8f * Mathf.Sin(1.48f * t / 3f))/7.2f - 1) ;
     }
     private float average_distance()
     {

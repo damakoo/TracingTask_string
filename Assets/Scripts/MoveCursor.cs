@@ -4,34 +4,44 @@ using UnityEngine;
 
 public class MoveCursor : MonoBehaviour
 {
+    [SerializeField] bool isleft;
+    Rigidbody2D thisrigidbody;
     // Start is called before the first frame update
     void Start()
     {
-        
+        thisrigidbody = this.gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D))
+        if (isleft)
         {
-            this.transform.position = this.transform.position + new Vector3 (0.145f,0,0);
+            if (Input.GetKey(KeyCode.W))
+            {
+                //this.transform.position = this.transform.position + new Vector3(0, 0.05f, 0);
+                thisrigidbody.AddForce(new Vector3(0, 5000000f, 0));
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                //this.transform.position = this.transform.position + new Vector3(0, -0.05f, 0);
+                thisrigidbody.AddForce(new Vector3(0, -5000000f, 0));
+            }
+
         }
-        if(Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A))
+        else
         {
-            this.transform.position = this.transform.position + new Vector3 (-0.145f,0,0);
-        }
-        if(Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.W))
-        {
-            this.transform.position = this.transform.position + new Vector3 (0,0.145f,0);
-        }
-        if(Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S))
-        {
-            this.transform.position = this.transform.position + new Vector3 (0,-0.145f,0);
-        }
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            this.transform.position = new Vector3(0, 0, 0);
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                //this.transform.position = this.transform.position + new Vector3(0, 0.05f, 0);
+                thisrigidbody.AddForce(new Vector3(0, 5000000f, 0));
+            }
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                //this.transform.position = this.transform.position + new Vector3(0, -0.05f, 0);
+                thisrigidbody.AddForce(new Vector3(0, -5000000f, 0));
+            }
+
         }
     }
 }
