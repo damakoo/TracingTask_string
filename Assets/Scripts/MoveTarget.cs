@@ -55,7 +55,8 @@ public class MoveTarget : MonoBehaviour
         _SpriteRenderer.enabled = true;
         _ChildSpriteRenderer.enabled = true;
         Canbus.SetActive(false);
-        distance_radius = (this.transform.localScale.x - Cursor.transform.localScale.x)/2;
+        //distance_radius = (this.transform.localScale.x - Cursor.transform.localScale.x) / 2;
+        distance_radius = (this.transform.localScale.x + Cursor.transform.localScale.x) / 2;
     }
 
     // Update is called once per frame
