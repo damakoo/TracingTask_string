@@ -21,7 +21,7 @@ public class MoveTarget : MonoBehaviour
     
     private float f_x(float t)
     {
-        return (3 * Mathf.Sin(1.8f*t/3f) + 3.4f * Mathf.Sin(1.8f * t / 3f) + 2.5f * Mathf.Sin(1.82f * t / 3f) + 4.3f * Mathf.Sin(2.34f * t / 3f))/6f;
+        return (3 * Mathf.Sin(1.8f*t/3f) + 3.4f * Mathf.Sin(1.8f * t / 3f) + 2.5f * Mathf.Sin(1.82f * t / 3f) + 4.3f * Mathf.Sin(2.34f * t / 3f))/2f;
     }
     private float f_y(float t)
     {
@@ -52,8 +52,8 @@ public class MoveTarget : MonoBehaviour
         RestTime = SettingTime;
         _SpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         _ChildSpriteRenderer = Child.gameObject.GetComponent<SpriteRenderer>();
-        _SpriteRenderer.enabled = true;
-        _ChildSpriteRenderer.enabled = true;
+        //_SpriteRenderer.enabled = true;
+        //_ChildSpriteRenderer.enabled = true;
         Canbus.SetActive(false);
         //distance_radius = (this.transform.localScale.x - Cursor.transform.localScale.x) / 2;
         distance_radius = (this.transform.localScale.x + Cursor.transform.localScale.x) / 2;
@@ -65,8 +65,8 @@ public class MoveTarget : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && !isTracing)
         {
             isTracing = true;
-            _SpriteRenderer.enabled = true;
-            _ChildSpriteRenderer.enabled = true;
+            //_SpriteRenderer.enabled = true;
+            //_ChildSpriteRenderer.enabled = true;
             Canbus.SetActive(false);
 
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChangeTensor : MonoBehaviour
 {
-    float tensor = 10000;
+    float tensor = 100000;
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
