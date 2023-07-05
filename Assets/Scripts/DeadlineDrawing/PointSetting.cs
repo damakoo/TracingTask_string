@@ -173,7 +173,7 @@ private Vector2[] _rightline4 = new Vector2[]
                     //setCollider();
                 }
             }
-            else if (_MoveTarget.RestTime % 10 > 9 && isSettingline)
+            else if (_MoveTarget.RestTime % 9 > 4 && isSettingline)
             {
                 setCollider();
                 Ignition();
