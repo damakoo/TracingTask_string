@@ -13,12 +13,13 @@ public class TargetSystem : MonoBehaviour
     [SerializeField] public int NumberOfObstacle = 300;
     [SerializeField] float minVelocity = 2;
     [SerializeField] float maxVelocity = 5;
-    private List<MoveTarget2> Obstacles = new List<MoveTarget2>();
+    public List<MoveTarget2> Obstacles = new List<MoveTarget2>();
     private List<bool> alreadyIngnitions = new List<bool>();
     public int CollisionNumber { get; set; } = 0;
     private float nowTime;
     public bool isTracing = false;
     private float Interval;
+    public bool isFinished = false;
 
 
 
@@ -68,6 +69,7 @@ public class TargetSystem : MonoBehaviour
                 InTargetGUI.text = CollisionNumber.ToString();
                 CollisionNumber = 0;
                 Destroy(this.gameObject);
+                isFinished = true;
             }
         }
         if (Input.GetKeyDown(KeyCode.Return))

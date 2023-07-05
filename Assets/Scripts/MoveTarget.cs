@@ -11,13 +11,14 @@ public class MoveTarget : MonoBehaviour
     [SerializeField] GameObject Child;
     [SerializeField] TextMeshProUGUI InTargetGUI;
     [SerializeField] TextMeshProUGUI DistanceGUI;
-    private float RestTime;
-    private bool isTracing = false;
+    public float RestTime { get; set; }
+    public bool isTracing = false;
     SpriteRenderer _SpriteRenderer;
     SpriteRenderer _ChildSpriteRenderer;
     private List<bool> inTarget = new List<bool>();
     private List<float> Distance = new List<float>();
     private float distance_radius;
+    public bool isFinishied = false;
     
     private float f_x(float t)
     {
@@ -91,6 +92,7 @@ public class MoveTarget : MonoBehaviour
                 DistanceGUI.text = average_distance().ToString();
                 inTarget = new List<bool>();
                 Distance = new List<float>();
+                isFinishied = true;
             }
         }
         if (Input.GetKeyDown(KeyCode.Return))
