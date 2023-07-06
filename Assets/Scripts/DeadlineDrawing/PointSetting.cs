@@ -12,6 +12,7 @@ public class PointSetting : MonoBehaviour
     List<GameObject> DeadlineRight = new List<GameObject>();
     List<GameObject> DeadlineLeft = new List<GameObject>();
     [SerializeField] GameObject DeadlinePoint;
+    [SerializeField] Transform Cursor;
     private List<LineRenderer> UpperLine = new List<LineRenderer>();
     private List<LineRenderer> LowerLine = new List<LineRenderer>();
     private List<LineRenderer> RightLine = new List<LineRenderer>();
@@ -59,6 +60,13 @@ public class PointSetting : MonoBehaviour
         Vector2.zero,
         Vector2.zero,
 };
+    private Vector2[] _upperline5 = new Vector2[]
+{
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+};
     private Vector2[] _rightline1 = new Vector2[]
 {
         Vector2.zero,
@@ -92,11 +100,13 @@ private Vector2[] _rightline4 = new Vector2[]
     int _upperpoint2;
     int _upperpoint3;
     int _upperpoint4;
+    int _upperpoint5;
 
     int _lowerpoint1;
     int _lowerpoint2;
     int _lowerpoint3;
     int _lowerpoint4;
+    int _lowerpoint5;
 
     int _rightpoint1;
     int _rightpoint2;
@@ -160,7 +170,7 @@ private Vector2[] _rightline4 = new Vector2[]
 
         if (_MoveTarget.isTracing)
         {
-            if(_MoveTarget.RestTime % 10 < AppearLine)
+            if(_MoveTarget.RestTime % 4 < AppearLine - 1)
             {
                 if (!isSettingline)
                 {
@@ -173,7 +183,7 @@ private Vector2[] _rightline4 = new Vector2[]
                     //setCollider();
                 }
             }
-            else if (_MoveTarget.RestTime % 9 > 4 && isSettingline)
+            else if (_MoveTarget.RestTime % 4 > 3f && isSettingline)
             {
                 setCollider();
                 Ignition();
@@ -186,6 +196,7 @@ private Vector2[] _rightline4 = new Vector2[]
 
         if (_MoveTarget.isFinishied)
         {
+            _MoveTarget.isFinishied = false;
             Ignition();
             isSettingline = false;
             setCollider();
@@ -287,6 +298,7 @@ private Vector2[] _rightline4 = new Vector2[]
         UpperLine[_upperpoint2].enabled = false;
         UpperLine[_upperpoint3].enabled = false;
         UpperLine[_upperpoint4].enabled = false;
+        UpperLine[_upperpoint5].enabled = false;
 
 
         RightLine[_rightpoint1].enabled = false;
@@ -300,16 +312,19 @@ private Vector2[] _rightline4 = new Vector2[]
         _upperpoint2 = Random.Range(0, (int)Number_updown / 2);
         _upperpoint3 = Random.Range((int)Number_updown / 2, Number_updown);
         _upperpoint4 = Random.Range((int)Number_updown / 2, Number_updown);
+        _upperpoint5 = Mathf.FloorToInt((Cursor.position.x - minRange.x) / (maxRange.x - minRange.x) * Number_updown);
 
         _lowerpoint1 = Random.Range(0, (int)Number_updown / 2);
         _lowerpoint2 = Random.Range(0, (int)Number_updown / 2);
         _lowerpoint3 = Random.Range((int)Number_updown / 2, Number_updown);
         _lowerpoint4 = Random.Range((int)Number_updown / 2, Number_updown);
+        _lowerpoint5 = _upperpoint5;
 
         UpperLine[_upperpoint1].enabled = true;
         UpperLine[_upperpoint2].enabled = true;
         UpperLine[_upperpoint3].enabled = true;
         UpperLine[_upperpoint4].enabled = true;
+        UpperLine[_upperpoint5].enabled = true;
 
         UpperLine[_upperpoint1].SetPosition(0, DeadlineUpper[_upperpoint1].transform.position);
         UpperLine[_upperpoint1].SetPosition(1, DeadlineLower[_lowerpoint1].transform.position);
@@ -319,6 +334,8 @@ private Vector2[] _rightline4 = new Vector2[]
         UpperLine[_upperpoint3].SetPosition(1, DeadlineLower[_lowerpoint2].transform.position);
         UpperLine[_upperpoint4].SetPosition(0, DeadlineUpper[_upperpoint4].transform.position);
         UpperLine[_upperpoint4].SetPosition(1, DeadlineLower[_lowerpoint4].transform.position);
+        UpperLine[_upperpoint5].SetPosition(0, DeadlineUpper[_upperpoint5].transform.position);
+        UpperLine[_upperpoint5].SetPosition(1, DeadlineLower[_lowerpoint5].transform.position);
 
 
         _rightpoint1 = Random.Range(0, (int)Number_rightleft / 2);
@@ -375,17 +392,26 @@ private Vector2[] _rightline4 = new Vector2[]
             ((Vector2)DeadlineLower[_lowerpoint4].transform.position - (Vector2)DeadlineUpper[_upperpoint4].transform.position + new Vector2(0.5f,0)),
             ((Vector2)DeadlineLower[_lowerpoint4].transform.position - (Vector2)DeadlineUpper[_upperpoint4].transform.position - new Vector2(0.5f,0)),
 };
+        _upperline5 = new Vector2[]
+{
+            ( - new Vector2(0.5f,0)),
+            (new Vector2(0.5f,0)),
+            ((Vector2)DeadlineLower[_lowerpoint5].transform.position - (Vector2)DeadlineUpper[_upperpoint5].transform.position + new Vector2(0.5f,0)),
+            ((Vector2)DeadlineLower[_lowerpoint5].transform.position - (Vector2)DeadlineUpper[_upperpoint5].transform.position - new Vector2(0.5f,0)),
+};
 
 
         Uppercollider[_upperpoint1].enabled = true;
         Uppercollider[_upperpoint2].enabled = true;
         Uppercollider[_upperpoint3].enabled = true;
         Uppercollider[_upperpoint4].enabled = true;
+        Uppercollider[_upperpoint5].enabled = true;
 
         Uppercollider[_upperpoint1].points = _upperline1;
         Uppercollider[_upperpoint2].points = _upperline2;
         Uppercollider[_upperpoint3].points = _upperline3;
         Uppercollider[_upperpoint4].points = _upperline4;
+        Uppercollider[_upperpoint5].points = _upperline5;
 
         _rightline1 = new Vector2[]
 {
@@ -436,6 +462,7 @@ private Vector2[] _rightline4 = new Vector2[]
         UpperLine[_upperpoint2].material = red;
         UpperLine[_upperpoint3].material = red;
         UpperLine[_upperpoint4].material = red;
+        UpperLine[_upperpoint5].material = red;
         RightLine[_rightpoint1].material = red;
         RightLine[_rightpoint2].material = red;
         RightLine[_rightpoint3].material = red;
@@ -450,6 +477,7 @@ private Vector2[] _rightline4 = new Vector2[]
         Uppercollider[_upperpoint2].enabled = false;
         Uppercollider[_upperpoint3].enabled = false;
         Uppercollider[_upperpoint4].enabled = false;
+        Uppercollider[_upperpoint5].enabled = false;
 
         Rightcollider[_rightpoint1].enabled = false;
         Rightcollider[_rightpoint2].enabled = false;
@@ -467,6 +495,7 @@ private Vector2[] _rightline4 = new Vector2[]
         UpperLine[_upperpoint2].material = white;
         UpperLine[_upperpoint3].material = white;
         UpperLine[_upperpoint4].material = white;
+        UpperLine[_upperpoint5].material = white;
         RightLine[_rightpoint1].material = white;
         RightLine[_rightpoint2].material = white;
         RightLine[_rightpoint3].material = white;
