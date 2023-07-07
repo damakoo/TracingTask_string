@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TracingTask.unity
     guid: 4cc667cac84654a9bbb2e5d772100909
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DeadLine.unity
     guid: 6f6f9047595ba47428f71b1277ffadf2
+  - enabled: 1
+    path: Assets/Scenes/DeadLine_const.unity
+    guid: fa8c003d057094c729f6095de96a9170
   m_configObjects: {}

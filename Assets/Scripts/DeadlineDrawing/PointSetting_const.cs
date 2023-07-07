@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
-public class PointSetting : MonoBehaviour
+public class PointSetting_const : MonoBehaviour
 {
     private bool isAnten = false;
     public int collidetime = 0;
@@ -46,6 +47,9 @@ public class PointSetting : MonoBehaviour
     private Quaternion firstCursorRot;
     private Quaternion firstRightCursorRot;
     private Quaternion firstLeftCursorRot;
+    private int IgniteTime = 0;
+    List<int> numbers = new List<int>();
+    List<int> Ignitenumbers = new List<int>();
 
     [SerializeField] TextMeshProUGUI _collisionUI;
     private Vector2[] _upperline1 = new Vector2[]
@@ -83,6 +87,13 @@ public class PointSetting : MonoBehaviour
         Vector2.zero,
         Vector2.zero,
 };
+    private Vector2[] _upperline6 = new Vector2[]
+{
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+};
     private Vector2[] _rightline1 = new Vector2[]
 {
         Vector2.zero,
@@ -90,39 +101,41 @@ public class PointSetting : MonoBehaviour
         Vector2.zero,
         Vector2.zero,
 };
-private Vector2[] _rightline2 = new Vector2[]
-{
+    private Vector2[] _rightline2 = new Vector2[]
+    {
         Vector2.zero,
         Vector2.zero,
         Vector2.zero,
         Vector2.zero,
-};
-private Vector2[] _rightline3 = new Vector2[]
-{
+    };
+    private Vector2[] _rightline3 = new Vector2[]
+    {
         Vector2.zero,
         Vector2.zero,
         Vector2.zero,
         Vector2.zero,
-};
-private Vector2[] _rightline4 = new Vector2[]
-{
+    };
+    private Vector2[] _rightline4 = new Vector2[]
+    {
         Vector2.zero,
         Vector2.zero,
         Vector2.zero,
         Vector2.zero,
-};
+    };
 
     public int _upperpoint1;
     public int _upperpoint2;
     public int _upperpoint3;
     public int _upperpoint4;
     public int _upperpoint5;
+    public int _upperpoint6;
 
     public int _lowerpoint1;
     public int _lowerpoint2;
     public int _lowerpoint3;
     public int _lowerpoint4;
     public int _lowerpoint5;
+    public int _lowerpoint6;
 
     public int _rightpoint1;
     public int _rightpoint2;
@@ -157,6 +170,20 @@ private Vector2[] _rightline4 = new Vector2[]
         Initialize();
         _collisionUI.text = "";
         SpawnChild();
+        for (int i = 0; i < 10; i++)
+        {
+            numbers.Add(i);
+        }
+
+        while (numbers.Count > 0)
+        {
+
+            int index = Random.Range(0, numbers.Count);
+
+            int ransu = numbers[index];
+            Ignitenumbers.Add(ransu);
+            numbers.RemoveAt(index);
+        }
     }
 
     // Update is called once per frame
@@ -188,11 +215,12 @@ private Vector2[] _rightline4 = new Vector2[]
 
         if (_MoveTarget.isTracing)
         {
-            if(_MoveTarget.RestTime % 4 < AppearLine - 1)
+            if (_MoveTarget.RestTime % 4 < AppearLine - 1)
             {
                 if (!isSettingline)
                 {
-                    setline();
+                    setline(Ignitenumbers[IgniteTime]);
+                        IgniteTime += 1;
                     isSettingline = true;
                 }
                 else
@@ -223,11 +251,15 @@ private Vector2[] _rightline4 = new Vector2[]
             setCollider();
             isSettingTriger = true;
             Invoke(nameof(ResetMaterial), 0.2f);
-            _collisionUI.text = collidetime.ToString();
+            Invoke(nameof(UpdateUI),0.25f);
         }
 
-        if (Input.GetKeyDown(KeyCode.K)) setline();
+        if (Input.GetKeyDown(KeyCode.K)) setline(0);
         if (Input.GetKeyDown(KeyCode.L)) fadeline();
+    }
+    void UpdateUI()
+    {
+        _collisionUI.text = collidetime.ToString();
     }
     void SpawnChild()
     {
@@ -321,6 +353,7 @@ private Vector2[] _rightline4 = new Vector2[]
         UpperLine[_upperpoint3].enabled = false;
         UpperLine[_upperpoint4].enabled = false;
         UpperLine[_upperpoint5].enabled = false;
+        UpperLine[_upperpoint6].enabled = false;
 
 
         RightLine[_rightpoint1].enabled = false;
@@ -328,25 +361,40 @@ private Vector2[] _rightline4 = new Vector2[]
         RightLine[_rightpoint3].enabled = false;
         RightLine[_rightpoint4].enabled = false;
     }
-    void setline()
+    void setline(int i)
     {
-        _upperpoint1 = Random.Range(0, (int)Number_updown / 2);
-        _upperpoint2 = Random.Range(0, (int)Number_updown / 2);
-        _upperpoint3 = Random.Range((int)Number_updown / 2, Number_updown);
-        _upperpoint4 = Random.Range((int)Number_updown / 2, Number_updown);
-        _upperpoint5 = Mathf.FloorToInt((Cursor.position.x - minRange.x) / (maxRange.x - minRange.x) * Number_updown);
+        //_upperpoint1 = Random.Range(0, (int)Number_updown / 2);
+        //_upperpoint2 = Random.Range(0, (int)Number_updown / 2);
+        //_upperpoint3 = Random.Range((int)Number_updown / 2, Number_updown);
+        //_upperpoint4 = Random.Range((int)Number_updown / 2, Number_updown);
+        //_upperpoint5 = Mathf.FloorToInt((Cursor.position.x - minRange.x) / (maxRange.x - minRange.x) * Number_updown);
 
-        _lowerpoint1 = Random.Range(0, (int)Number_updown / 2);
-        _lowerpoint2 = Random.Range(0, (int)Number_updown / 2);
-        _lowerpoint3 = Random.Range((int)Number_updown / 2, Number_updown);
-        _lowerpoint4 = Random.Range((int)Number_updown / 2, Number_updown);
+        //_lowerpoint1 = Random.Range(0, (int)Number_updown / 2);
+        //_lowerpoint2 = Random.Range(0, (int)Number_updown / 2);
+        //_lowerpoint3 = Random.Range((int)Number_updown / 2, Number_updown);
+        //_lowerpoint4 = Random.Range((int)Number_updown / 2, Number_updown);
+        //_lowerpoint5 = _upperpoint5;
+
+        _upperpoint1 = DeadlineList.upperpoints1[i];
+        _upperpoint2 = DeadlineList.upperpoints2[i];
+        _upperpoint3 = DeadlineList.upperpoints3[i];
+        _upperpoint4 = DeadlineList.upperpoints4[i];
+        _upperpoint5 = DeadlineList.upperpoints5[i];
+        _upperpoint6 = DeadlineList.upperpoints6[i];
+
+        _lowerpoint1 = DeadlineList.lowerpoints1[i];
+        _lowerpoint2 = DeadlineList.lowerpoints2[i];
+        _lowerpoint3 = DeadlineList.lowerpoints3[i];
+        _lowerpoint4 = DeadlineList.lowerpoints4[i];
         _lowerpoint5 = _upperpoint5;
+        _lowerpoint6 = _upperpoint6;
 
         UpperLine[_upperpoint1].enabled = true;
         UpperLine[_upperpoint2].enabled = true;
         UpperLine[_upperpoint3].enabled = true;
         UpperLine[_upperpoint4].enabled = true;
         UpperLine[_upperpoint5].enabled = true;
+        UpperLine[_upperpoint6].enabled = true;
 
         UpperLine[_upperpoint1].SetPosition(0, DeadlineUpper[_upperpoint1].transform.position);
         UpperLine[_upperpoint1].SetPosition(1, DeadlineLower[_lowerpoint1].transform.position);
@@ -358,17 +406,19 @@ private Vector2[] _rightline4 = new Vector2[]
         UpperLine[_upperpoint4].SetPosition(1, DeadlineLower[_lowerpoint4].transform.position);
         UpperLine[_upperpoint5].SetPosition(0, DeadlineUpper[_upperpoint5].transform.position);
         UpperLine[_upperpoint5].SetPosition(1, DeadlineLower[_lowerpoint5].transform.position);
+        UpperLine[_upperpoint6].SetPosition(0, DeadlineUpper[_upperpoint6].transform.position);
+        UpperLine[_upperpoint6].SetPosition(1, DeadlineLower[_lowerpoint6].transform.position);
 
 
-        _rightpoint1 = Random.Range(0, (int)Number_rightleft / 2);
-        _rightpoint2 = Random.Range(0, (int)Number_rightleft / 2);
-        _rightpoint3 = Random.Range((int)Number_rightleft / 2, Number_rightleft);
-        _rightpoint4 = Random.Range((int)Number_rightleft / 2, Number_rightleft);
+        _rightpoint1 = DeadlineList.rightpoints1[i];
+        _rightpoint2 = DeadlineList.rightpoints2[i];
+        _rightpoint3 = DeadlineList.rightpoints3[i];
+        _rightpoint4 = DeadlineList.rightpoints4[i];
 
-        _leftpoint1 = Random.Range(0, (int)Number_rightleft / 2);
-        _leftpoint2 = Random.Range(0, (int)Number_rightleft / 2);
-        _leftpoint3 = Random.Range((int)Number_rightleft / 2, Number_rightleft);
-        _leftpoint4 = Random.Range((int)Number_rightleft / 2, Number_rightleft);
+        _leftpoint1 = DeadlineList.leftpoints1[i];
+        _leftpoint2 = DeadlineList.leftpoints2[i];
+        _leftpoint3 = DeadlineList.leftpoints3[i];
+        _leftpoint4 = DeadlineList.leftpoints4[i];
 
         RightLine[_rightpoint1].enabled = true;
         RightLine[_rightpoint2].enabled = true;
@@ -421,6 +471,13 @@ private Vector2[] _rightline4 = new Vector2[]
             ((Vector2)DeadlineLower[_lowerpoint5].transform.position - (Vector2)DeadlineUpper[_upperpoint5].transform.position + new Vector2(0.5f,0)),
             ((Vector2)DeadlineLower[_lowerpoint5].transform.position - (Vector2)DeadlineUpper[_upperpoint5].transform.position - new Vector2(0.5f,0)),
 };
+        _upperline6 = new Vector2[]
+{
+            ( - new Vector2(0.5f,0)),
+            (new Vector2(0.5f,0)),
+            ((Vector2)DeadlineLower[_lowerpoint6].transform.position - (Vector2)DeadlineUpper[_upperpoint6].transform.position + new Vector2(0.5f,0)),
+            ((Vector2)DeadlineLower[_lowerpoint6].transform.position - (Vector2)DeadlineUpper[_upperpoint6].transform.position - new Vector2(0.5f,0)),
+};
 
 
         Uppercollider[_upperpoint1].enabled = true;
@@ -428,12 +485,14 @@ private Vector2[] _rightline4 = new Vector2[]
         Uppercollider[_upperpoint3].enabled = true;
         Uppercollider[_upperpoint4].enabled = true;
         Uppercollider[_upperpoint5].enabled = true;
+        Uppercollider[_upperpoint6].enabled = true;
 
         Uppercollider[_upperpoint1].points = _upperline1;
         Uppercollider[_upperpoint2].points = _upperline2;
         Uppercollider[_upperpoint3].points = _upperline3;
         Uppercollider[_upperpoint4].points = _upperline4;
         Uppercollider[_upperpoint5].points = _upperline5;
+        Uppercollider[_upperpoint6].points = _upperline6;
 
         _rightline1 = new Vector2[]
 {
@@ -485,6 +544,7 @@ private Vector2[] _rightline4 = new Vector2[]
         UpperLine[_upperpoint3].material = red;
         UpperLine[_upperpoint4].material = red;
         UpperLine[_upperpoint5].material = red;
+        UpperLine[_upperpoint6].material = red;
         RightLine[_rightpoint1].material = red;
         RightLine[_rightpoint2].material = red;
         RightLine[_rightpoint3].material = red;
@@ -498,6 +558,7 @@ private Vector2[] _rightline4 = new Vector2[]
         Uppercollider[_upperpoint3].enabled = false;
         Uppercollider[_upperpoint4].enabled = false;
         Uppercollider[_upperpoint5].enabled = false;
+        Uppercollider[_upperpoint6].enabled = false;
 
         Rightcollider[_rightpoint1].enabled = false;
         Rightcollider[_rightpoint2].enabled = false;
@@ -507,7 +568,7 @@ private Vector2[] _rightline4 = new Vector2[]
     public void minusColor()
     {
         float nowcolor = red.color.a;
-        red.color = new Color(255, 0, 0, nowcolor - (defaultcolor - 0.01f)/AppearLine * Time.deltaTime);
+        red.color = new Color(255, 0, 0, nowcolor - (defaultcolor - 0.01f) / AppearLine * Time.deltaTime);
     }
     public void Ignition()
     {
@@ -516,6 +577,7 @@ private Vector2[] _rightline4 = new Vector2[]
         UpperLine[_upperpoint3].material = white;
         UpperLine[_upperpoint4].material = white;
         UpperLine[_upperpoint5].material = white;
+        UpperLine[_upperpoint6].material = white;
         RightLine[_rightpoint1].material = white;
         RightLine[_rightpoint2].material = white;
         RightLine[_rightpoint3].material = white;
@@ -532,13 +594,13 @@ private Vector2[] _rightline4 = new Vector2[]
     }
     void RopeInitialize()
     {
-        foreach(Transform child in RopeParent.transform)
+        foreach (Transform child in RopeParent.transform)
         {
             RopeChildrenTransform.Add(child);
             Vector3 pos = child.position;
             Quaternion rot = child.rotation;
             RopeChildrenfirstPosition.Add(pos);
-            RopeChildrenfirstQuaternion.Add(rot); 
+            RopeChildrenfirstQuaternion.Add(rot);
         }
     }
     private void Initialize()
@@ -558,7 +620,7 @@ private Vector2[] _rightline4 = new Vector2[]
         RightCursor.transform.rotation = firstRightCursorRot;
         LeftCursor.transform.position = firstLeftCursorPos;
         LeftCursor.transform.rotation = firstLeftCursorRot;
-        for(int i = 0; i < RopeChildrenTransform.Count; i++)
+        for (int i = 0; i < RopeChildrenTransform.Count; i++)
         {
             RopeChildrenTransform[i].position = RopeChildrenfirstPosition[i];
             RopeChildrenTransform[i].rotation = RopeChildrenfirstQuaternion[i];
