@@ -17,6 +17,7 @@ public class PointSetting_const : MonoBehaviour
     List<GameObject> DeadlineLeft = new List<GameObject>();
     [SerializeField] GameObject DeadlinePoint;
     [SerializeField] Transform Cursor;
+    Rigidbody2D _cursorRigidbody;
     private List<LineRenderer> UpperLine = new List<LineRenderer>();
     private List<LineRenderer> LowerLine = new List<LineRenderer>();
     private List<LineRenderer> RightLine = new List<LineRenderer>();
@@ -184,6 +185,7 @@ public class PointSetting_const : MonoBehaviour
             Ignitenumbers.Add(ransu);
             numbers.RemoveAt(index);
         }
+        _cursorRigidbody = Cursor.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -625,6 +627,7 @@ public class PointSetting_const : MonoBehaviour
             RopeChildrenTransform[i].position = RopeChildrenfirstPosition[i];
             RopeChildrenTransform[i].rotation = RopeChildrenfirstQuaternion[i];
         }
+        _cursorRigidbody.velocity = new Vector2(0,0);
     }
     void Anten()
     {
