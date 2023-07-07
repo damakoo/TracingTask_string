@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class PointSetting : MonoBehaviour
 {
+    private bool isAnten = false;
     public int collidetime = 0;
     [SerializeField] Transform DeadlineSize;
+    [SerializeField] Image image;
     List<GameObject> DeadlineUpper = new List<GameObject>();
     List<GameObject> DeadlineLower = new List<GameObject>();
     List<GameObject> DeadlineRight = new List<GameObject>();
@@ -31,6 +34,19 @@ public class PointSetting : MonoBehaviour
     [SerializeField] MoveCursor2 _MoveCursor;
     private bool isSettingTriger = false;
     private bool isSettingTriger2 = false;
+    [SerializeField] GameObject RightCursor;
+    [SerializeField] GameObject LeftCursor;
+    [SerializeField] GameObject RopeParent;
+    List<Transform> RopeChildrenTransform = new List<Transform>();
+    List<Vector3> RopeChildrenfirstPosition = new List<Vector3>();
+    List<Quaternion> RopeChildrenfirstQuaternion = new List<Quaternion>();
+    private Vector3 firstCursorPos;
+    private Vector3 firstRightCursorPos;
+    private Vector3 firstLeftCursorPos;
+    private Quaternion firstCursorRot;
+    private Quaternion firstRightCursorRot;
+    private Quaternion firstLeftCursorRot;
+
     [SerializeField] TextMeshProUGUI _collisionUI;
     private Vector2[] _upperline1 = new Vector2[]
     {
@@ -137,6 +153,8 @@ private Vector2[] _rightline4 = new Vector2[]
     // Start is called before the first frame update
     void Start()
     {
+        RopeInitialize();
+        Initialize();
         _collisionUI.text = "";
         SpawnChild();
     }
@@ -144,7 +162,7 @@ private Vector2[] _rightline4 = new Vector2[]
     // Update is called once per frame
     void Update()
     {
-
+        if (isAnten) AddAnten();
         if (isSettingTriger2)
         {
             isSettingTriger = false;
@@ -185,11 +203,14 @@ private Vector2[] _rightline4 = new Vector2[]
             }
             else if (_MoveTarget.RestTime % 4 > 3f && isSettingline)
             {
+                _MoveTarget.isTracing = false;
                 setCollider();
                 Ignition();
                 isSettingline = false;
                 isSettingTriger = true;
                 Invoke(nameof(ResetMaterial), 0.2f);
+                Invoke(nameof(Anten), 0.2f);
+                Invoke(nameof(RestartTracing), 1.2f);
             }
 
         }
@@ -274,6 +295,7 @@ private Vector2[] _rightline4 = new Vector2[]
             _lineRenderer2.material = red;
             _lineRenderer2.enabled = false;
         }
+
     }
     void fadeline()
     {
@@ -467,12 +489,10 @@ private Vector2[] _rightline4 = new Vector2[]
         RightLine[_rightpoint2].material = red;
         RightLine[_rightpoint3].material = red;
         RightLine[_rightpoint4].material = red;
-
-
+        ResetPos();
     }
     void fadecollider()
     {
-
         Uppercollider[_upperpoint1].enabled = false;
         Uppercollider[_upperpoint2].enabled = false;
         Uppercollider[_upperpoint3].enabled = false;
@@ -508,7 +528,56 @@ private Vector2[] _rightline4 = new Vector2[]
     }
     void CursorOff()
     {
-
         cursorcolor.color = new Color(255, 0, 0, 0);
+    }
+    void RopeInitialize()
+    {
+        foreach(Transform child in RopeParent.transform)
+        {
+            RopeChildrenTransform.Add(child);
+            Vector3 pos = child.position;
+            Quaternion rot = child.rotation;
+            RopeChildrenfirstPosition.Add(pos);
+            RopeChildrenfirstQuaternion.Add(rot); 
+        }
+    }
+    private void Initialize()
+    {
+        firstCursorPos = Cursor.transform.position;
+        firstCursorRot = Cursor.transform.rotation;
+        firstRightCursorPos = RightCursor.transform.position;
+        firstRightCursorRot = RightCursor.transform.rotation;
+        firstLeftCursorPos = LeftCursor.transform.position;
+        firstLeftCursorRot = LeftCursor.transform.rotation;
+    }
+    private void ResetPos()
+    {
+        Cursor.transform.position = firstCursorPos;
+        Cursor.transform.rotation = firstCursorRot;
+        RightCursor.transform.position = firstRightCursorPos;
+        RightCursor.transform.rotation = firstRightCursorRot;
+        LeftCursor.transform.position = firstLeftCursorPos;
+        LeftCursor.transform.rotation = firstLeftCursorRot;
+        for(int i = 0; i < RopeChildrenTransform.Count; i++)
+        {
+            RopeChildrenTransform[i].position = RopeChildrenfirstPosition[i];
+            RopeChildrenTransform[i].rotation = RopeChildrenfirstQuaternion[i];
+        }
+    }
+    void Anten()
+    {
+        image.color = new Color(0, 0, 0, 1f);
+        isAnten = true;
+    }
+    void AddAnten()
+    {
+        float a = image.color.a;
+        image.color = new Color(0, 0, 0, a - Time.deltaTime);
+    }
+    void RestartTracing()
+    {
+        _MoveTarget.isTracing = true;
+        isAnten = false;
+        image.color = new Color(0, 0, 0, 0f);
     }
 }

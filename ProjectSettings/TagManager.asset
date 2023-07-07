@@ -10,7 +10,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Anten
   - Water
   - UI
   - 
@@ -40,6 +40,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Anten
+    uniqueID: 715743445
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
