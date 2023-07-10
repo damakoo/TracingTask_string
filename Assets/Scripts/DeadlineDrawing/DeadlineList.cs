@@ -26,6 +26,14 @@ public static class DeadlineList
     {
         10,7,6,15,5,14,10,10,10,11
     };
+    public static List<int> upperpoints7 = new List<int>
+    {
+        18,18,18,18,18,18,18,18,18,18
+    };
+    public static List<int> upperpoints8 = new List<int>
+    {
+        1,1,1,1,1,1,1,1,1,1
+    };
     public static List<int> lowerpoints1 = new List<int>
     {
         5,4,4,7,0,9,8,9,7,6
@@ -77,5 +85,13 @@ public static class DeadlineList
     public static List<int> rightpoints4 = new List<int>
     {
         9,9,8,5,9,8,6,8,8,8
+    };
+    public static List<int> rightpoints5 = new List<int>
+    {
+        1,1,1,1,1,1,1,1,1,1
+    };
+    public static List<int> rightpoints6 = new List<int>
+    {
+        8,8,8,8,8,8,8,8,8,8
     };
 }

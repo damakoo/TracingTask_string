@@ -24,6 +24,5 @@ public class MoveCursor2 : MonoBehaviour
         {
             CollideDeadline = true;
         }
-    
     }
 }

@@ -65,7 +65,7 @@ public class MoveTarget : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) && !isTracing)
         {
-            isTracing = true;
+            //isTracing = true;
             //_SpriteRenderer.enabled = true;
             //_ChildSpriteRenderer.enabled = true;
             Canbus.SetActive(false);

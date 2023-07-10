@@ -509,6 +509,7 @@ GameObject:
   - component: {fileID: 95808820}
   - component: {fileID: 95808819}
   - component: {fileID: 95808822}
+  - component: {fileID: 95808823}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -655,6 +656,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &95808823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95808818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afcf66f59b51842f3bad224a422dd301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &164222377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1992,6 +2005,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1106750947}
+  - {fileID: 2048254704}
+  - {fileID: 1765385417}
+  - {fileID: 1240635563}
+  - {fileID: 1177288603}
   - {fileID: 164222381}
   - {fileID: 893159147}
   - {fileID: 903234974}
@@ -2062,12 +2080,7 @@ Transform:
   - {fileID: 1597788094}
   - {fileID: 1302095496}
   - {fileID: 1256345696}
-  - {fileID: 1177288603}
   - {fileID: 1062055215}
-  - {fileID: 1765385417}
-  - {fileID: 2048254704}
-  - {fileID: 1106750947}
-  - {fileID: 1240635563}
   - {fileID: 1263214243}
   - {fileID: 1927886349}
   - {fileID: 952506733}
@@ -4527,7 +4540,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895540105}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -5667,7 +5680,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1059336494}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -6550,7 +6563,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127431433}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -8918,7 +8931,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1498, y: 446}
+  m_AnchoredPosition: {x: 1498, y: 805}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1288882588
@@ -10167,7 +10180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461288539}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.58414793, y: -0.67719924, z: -0.067489505}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10202,27 +10215,8 @@ MonoBehaviour:
   RightCursor: {fileID: 1599538742}
   LeftCursor: {fileID: 1818062071}
   RopeParent: {fileID: 400354480}
+  CanMoveBall: 1
   _collisionUI: {fileID: 1288882588}
-  _upperpoint1: 0
-  _upperpoint2: 0
-  _upperpoint3: 0
-  _upperpoint4: 0
-  _upperpoint5: 0
-  _upperpoint6: 0
-  _lowerpoint1: 0
-  _lowerpoint2: 0
-  _lowerpoint3: 0
-  _lowerpoint4: 0
-  _lowerpoint5: 0
-  _lowerpoint6: 0
-  _rightpoint1: 0
-  _rightpoint2: 0
-  _rightpoint3: 0
-  _rightpoint4: 0
-  _leftpoint1: 0
-  _leftpoint2: 0
-  _leftpoint3: 0
-  _leftpoint4: 0
   Number_rightleft: 10
   Number_updown: 20
 --- !u!1 &1466828666
@@ -12054,6 +12048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isleft: 0
+  _pointSetting_Const: {fileID: 1461288542}
 --- !u!212 &1599538744
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13178,7 +13173,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692738811}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -13841,6 +13836,7 @@ GameObject:
   - component: {fileID: 1747936471}
   - component: {fileID: 1747936470}
   - component: {fileID: 1747936473}
+  - component: {fileID: 1747936474}
   m_Layer: 0
   m_Name: Square (1)
   m_TagString: Untagged
@@ -13987,6 +13983,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1747936474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747936469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afcf66f59b51842f3bad224a422dd301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1765385411
 GameObject:
   m_ObjectHideFlags: 0
@@ -14546,6 +14554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isleft: 1
+  _pointSetting_Const: {fileID: 1461288542}
 --- !u!50 &1818062075
 Rigidbody2D:
   serializedVersion: 4

@@ -6,6 +6,7 @@ public class MoveCursor : MonoBehaviour
 {
     [SerializeField] bool isleft;
     Rigidbody2D thisrigidbody;
+    [SerializeField] PointSetting_const _pointSetting_Const;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,33 +16,35 @@ public class MoveCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isleft)
+        if (_pointSetting_Const.CanMoveBall)
         {
-            if (Input.GetKey(KeyCode.W))
+            if (isleft)
             {
-                //this.transform.position = this.transform.position + new Vector3(0, 0.05f, 0);
-                thisrigidbody.AddForce(new Vector3(0, 30000000f, 0));
+                if (Input.GetKey(KeyCode.W))
+                {
+                    //this.transform.position = this.transform.position + new Vector3(0, 0.05f, 0);
+                    thisrigidbody.AddForce(new Vector3(0, 30000000f, 0));
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    //this.transform.position = this.transform.position + new Vector3(0, -0.05f, 0);
+                    thisrigidbody.AddForce(new Vector3(0, -30000000f, 0));
+                }
             }
-            if (Input.GetKey(KeyCode.S))
+            else
             {
-                //this.transform.position = this.transform.position + new Vector3(0, -0.05f, 0);
-                thisrigidbody.AddForce(new Vector3(0, -30000000f, 0));
-            }
+                if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    //this.transform.position = this.transform.position + new Vector3(0, 0.05f, 0);
+                    thisrigidbody.AddForce(new Vector3(0, 30000000f, 0));
+                }
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    //this.transform.position = this.transform.position + new Vector3(0, -0.05f, 0);
+                    thisrigidbody.AddForce(new Vector3(0, -30000000f, 0));
+                }
 
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                //this.transform.position = this.transform.position + new Vector3(0, 0.05f, 0);
-                thisrigidbody.AddForce(new Vector3(0, 30000000f, 0));
             }
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                //this.transform.position = this.transform.position + new Vector3(0, -0.05f, 0);
-                thisrigidbody.AddForce(new Vector3(0, -30000000f, 0));
-            }
-
         }
     }
 

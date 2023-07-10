@@ -51,6 +51,7 @@ public class PointSetting_const : MonoBehaviour
     private int IgniteTime = 0;
     List<int> numbers = new List<int>();
     List<int> Ignitenumbers = new List<int>();
+    public bool CanMoveBall = true;
 
     [SerializeField] TextMeshProUGUI _collisionUI;
     private Vector2[] _upperline1 = new Vector2[]
@@ -95,6 +96,21 @@ public class PointSetting_const : MonoBehaviour
         Vector2.zero,
         Vector2.zero,
 };
+
+    private Vector2[] _upperline7 = new Vector2[]
+{
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+};
+    private Vector2[] _upperline8 = new Vector2[]
+{
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+};
     private Vector2[] _rightline1 = new Vector2[]
 {
         Vector2.zero,
@@ -123,30 +139,52 @@ public class PointSetting_const : MonoBehaviour
         Vector2.zero,
         Vector2.zero,
     };
+    private Vector2[] _rightline5 = new Vector2[]
+{
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+};
+    private Vector2[] _rightline6 = new Vector2[]
+{
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+        Vector2.zero,
+};
 
-    public int _upperpoint1;
-    public int _upperpoint2;
-    public int _upperpoint3;
-    public int _upperpoint4;
-    public int _upperpoint5;
-    public int _upperpoint6;
+    int _upperpoint1;
+    int _upperpoint2;
+    int _upperpoint3;
+    int _upperpoint4;
+    int _upperpoint5;
+    int _upperpoint6;
+    int _upperpoint7;
+    int _upperpoint8;
 
-    public int _lowerpoint1;
-    public int _lowerpoint2;
-    public int _lowerpoint3;
-    public int _lowerpoint4;
-    public int _lowerpoint5;
-    public int _lowerpoint6;
+    int _lowerpoint1;
+    int _lowerpoint2;
+    int _lowerpoint3;
+    int _lowerpoint4;
+    int _lowerpoint5;
+    int _lowerpoint6;
+    int _lowerpoint7;
+    int _lowerpoint8;
 
-    public int _rightpoint1;
-    public int _rightpoint2;
-    public int _rightpoint3;
-    public int _rightpoint4;
+    int _rightpoint1;
+    int _rightpoint2;
+    int _rightpoint3;
+    int _rightpoint4;
+    int _rightpoint5;
+    int _rightpoint6;
 
-    public int _leftpoint1;
-    public int _leftpoint2;
-    public int _leftpoint3;
-    public int _leftpoint4;
+    int _leftpoint1;
+    int _leftpoint2;
+    int _leftpoint3;
+    int _leftpoint4;
+    int _leftpoint5;
+    int _leftpoint6;
 
     [SerializeField] int Number_rightleft = 5;
     [SerializeField] int Number_updown = 10;
@@ -191,6 +229,13 @@ public class PointSetting_const : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space) && !_MoveTarget.isTracing)
+        {
+            ResetMaterial();
+            Anten();
+            Invoke(nameof(RestartTracing), 1.0f);
+
+        }
         if (isAnten) AddAnten();
         if (isSettingTriger2)
         {
@@ -222,7 +267,7 @@ public class PointSetting_const : MonoBehaviour
                 if (!isSettingline)
                 {
                     setline(Ignitenumbers[IgniteTime]);
-                        IgniteTime += 1;
+                    IgniteTime += 1;
                     isSettingline = true;
                 }
                 else
@@ -231,7 +276,7 @@ public class PointSetting_const : MonoBehaviour
                     //setCollider();
                 }
             }
-            else if (_MoveTarget.RestTime % 4 > 3f && isSettingline)
+            else if (_MoveTarget.RestTime % 4 > 3f && _MoveTarget.RestTime < 37 && isSettingline)
             {
                 _MoveTarget.isTracing = false;
                 setCollider();
@@ -356,12 +401,16 @@ public class PointSetting_const : MonoBehaviour
         UpperLine[_upperpoint4].enabled = false;
         UpperLine[_upperpoint5].enabled = false;
         UpperLine[_upperpoint6].enabled = false;
+        LowerLine[_upperpoint7].enabled = false;
+        LowerLine[_upperpoint8].enabled = false;
 
 
         RightLine[_rightpoint1].enabled = false;
         RightLine[_rightpoint2].enabled = false;
         RightLine[_rightpoint3].enabled = false;
         RightLine[_rightpoint4].enabled = false;
+        LeftLine[_rightpoint5].enabled = false;
+        LeftLine[_rightpoint6].enabled = false;
     }
     void setline(int i)
     {
@@ -383,6 +432,8 @@ public class PointSetting_const : MonoBehaviour
         _upperpoint4 = DeadlineList.upperpoints4[i];
         _upperpoint5 = DeadlineList.upperpoints5[i];
         _upperpoint6 = DeadlineList.upperpoints6[i];
+        _upperpoint7 = DeadlineList.upperpoints7[i];
+        _upperpoint8 = DeadlineList.upperpoints8[i];
 
         _lowerpoint1 = DeadlineList.lowerpoints1[i];
         _lowerpoint2 = DeadlineList.lowerpoints2[i];
@@ -390,6 +441,8 @@ public class PointSetting_const : MonoBehaviour
         _lowerpoint4 = DeadlineList.lowerpoints4[i];
         _lowerpoint5 = _upperpoint5;
         _lowerpoint6 = _upperpoint6;
+        _lowerpoint7 = _upperpoint7;
+        _lowerpoint8 = _upperpoint8;
 
         UpperLine[_upperpoint1].enabled = true;
         UpperLine[_upperpoint2].enabled = true;
@@ -397,6 +450,8 @@ public class PointSetting_const : MonoBehaviour
         UpperLine[_upperpoint4].enabled = true;
         UpperLine[_upperpoint5].enabled = true;
         UpperLine[_upperpoint6].enabled = true;
+        LowerLine[_upperpoint7].enabled = true;
+        LowerLine[_upperpoint8].enabled = true;
 
         UpperLine[_upperpoint1].SetPosition(0, DeadlineUpper[_upperpoint1].transform.position);
         UpperLine[_upperpoint1].SetPosition(1, DeadlineLower[_lowerpoint1].transform.position);
@@ -410,22 +465,32 @@ public class PointSetting_const : MonoBehaviour
         UpperLine[_upperpoint5].SetPosition(1, DeadlineLower[_lowerpoint5].transform.position);
         UpperLine[_upperpoint6].SetPosition(0, DeadlineUpper[_upperpoint6].transform.position);
         UpperLine[_upperpoint6].SetPosition(1, DeadlineLower[_lowerpoint6].transform.position);
+        LowerLine[_upperpoint7].SetPosition(0, DeadlineUpper[_upperpoint7].transform.position);
+        LowerLine[_upperpoint7].SetPosition(1, DeadlineLower[_lowerpoint7].transform.position);
+        LowerLine[_upperpoint8].SetPosition(0, DeadlineUpper[_upperpoint8].transform.position);
+        LowerLine[_upperpoint8].SetPosition(1, DeadlineLower[_lowerpoint8].transform.position);
 
 
         _rightpoint1 = DeadlineList.rightpoints1[i];
         _rightpoint2 = DeadlineList.rightpoints2[i];
         _rightpoint3 = DeadlineList.rightpoints3[i];
         _rightpoint4 = DeadlineList.rightpoints4[i];
+        _rightpoint5 = DeadlineList.rightpoints5[i];
+        _rightpoint6 = DeadlineList.rightpoints6[i];
 
         _leftpoint1 = DeadlineList.leftpoints1[i];
         _leftpoint2 = DeadlineList.leftpoints2[i];
         _leftpoint3 = DeadlineList.leftpoints3[i];
         _leftpoint4 = DeadlineList.leftpoints4[i];
+        _leftpoint5 = _rightpoint5;
+        _leftpoint6 = _rightpoint6;
 
         RightLine[_rightpoint1].enabled = true;
         RightLine[_rightpoint2].enabled = true;
         RightLine[_rightpoint3].enabled = true;
         RightLine[_rightpoint4].enabled = true;
+        LeftLine[_rightpoint5].enabled = true;
+        LeftLine[_rightpoint6].enabled = true;
 
         RightLine[_rightpoint1].SetPosition(0, DeadlineRight[_rightpoint1].transform.position);
         RightLine[_rightpoint1].SetPosition(1, DeadlineLeft[_leftpoint1].transform.position);
@@ -435,6 +500,11 @@ public class PointSetting_const : MonoBehaviour
         RightLine[_rightpoint3].SetPosition(1, DeadlineLeft[_leftpoint2].transform.position);
         RightLine[_rightpoint4].SetPosition(0, DeadlineRight[_rightpoint4].transform.position);
         RightLine[_rightpoint4].SetPosition(1, DeadlineLeft[_leftpoint4].transform.position);
+        LeftLine[_rightpoint5].SetPosition(0, DeadlineRight[_rightpoint5].transform.position);
+        LeftLine[_rightpoint5].SetPosition(1, DeadlineLeft[_leftpoint5].transform.position);
+        LeftLine[_rightpoint6].SetPosition(0, DeadlineRight[_rightpoint6].transform.position);
+        LeftLine[_rightpoint6].SetPosition(1, DeadlineLeft[_leftpoint6].transform.position);
+        CanMoveBall = true;
     }
     void setCollider()
     {
@@ -480,6 +550,20 @@ public class PointSetting_const : MonoBehaviour
             ((Vector2)DeadlineLower[_lowerpoint6].transform.position - (Vector2)DeadlineUpper[_upperpoint6].transform.position + new Vector2(0.5f,0)),
             ((Vector2)DeadlineLower[_lowerpoint6].transform.position - (Vector2)DeadlineUpper[_upperpoint6].transform.position - new Vector2(0.5f,0)),
 };
+        _upperline7 = new Vector2[]
+{
+            ( - new Vector2(0.5f,0)),
+            (new Vector2(0.5f,0)),
+            (-(Vector2)DeadlineLower[_lowerpoint7].transform.position + (Vector2)DeadlineUpper[_upperpoint7].transform.position + new Vector2(0.5f,0)),
+            (-(Vector2)DeadlineLower[_lowerpoint7].transform.position + (Vector2)DeadlineUpper[_upperpoint7].transform.position - new Vector2(0.5f,0)),
+};
+        _upperline8 = new Vector2[]
+{
+            ( - new Vector2(0.5f,0)),
+            (new Vector2(0.5f,0)),
+            (-(Vector2)DeadlineLower[_lowerpoint8].transform.position + (Vector2)DeadlineUpper[_upperpoint8].transform.position + new Vector2(0.5f,0)),
+            (-(Vector2)DeadlineLower[_lowerpoint8].transform.position + (Vector2)DeadlineUpper[_upperpoint8].transform.position - new Vector2(0.5f,0)),
+};
 
 
         Uppercollider[_upperpoint1].enabled = true;
@@ -488,6 +572,8 @@ public class PointSetting_const : MonoBehaviour
         Uppercollider[_upperpoint4].enabled = true;
         Uppercollider[_upperpoint5].enabled = true;
         Uppercollider[_upperpoint6].enabled = true;
+        Lowercollider[_upperpoint7].enabled = true;
+        Lowercollider[_upperpoint8].enabled = true;
 
         Uppercollider[_upperpoint1].points = _upperline1;
         Uppercollider[_upperpoint2].points = _upperline2;
@@ -495,6 +581,8 @@ public class PointSetting_const : MonoBehaviour
         Uppercollider[_upperpoint4].points = _upperline4;
         Uppercollider[_upperpoint5].points = _upperline5;
         Uppercollider[_upperpoint6].points = _upperline6;
+        Lowercollider[_upperpoint7].points = _upperline7;
+        Lowercollider[_upperpoint8].points = _upperline8;
 
         _rightline1 = new Vector2[]
 {
@@ -522,19 +610,40 @@ public class PointSetting_const : MonoBehaviour
             ( - new Vector2(0,0.5f)),
             (new Vector2(0,0.5f)),
             ((Vector2)DeadlineLeft[_leftpoint4].transform.position - (Vector2)DeadlineRight[_rightpoint4].transform.position + new Vector2(0,0.5f)),
-            ((Vector2)DeadlineLeft[_leftpoint4].transform.position - (Vector2)DeadlineRight[_rightpoint4].transform.position   - new Vector2(0,0.5f)),
+            ((Vector2)DeadlineLeft[_leftpoint4].transform.position - (Vector2)DeadlineRight[_rightpoint4].transform.position - new Vector2(0,0.5f)),
+};
+
+        _rightline5 = new Vector2[]
+{
+            ( - new Vector2(0,0.5f)),
+            (new Vector2(0,0.5f)),
+            (-(Vector2)DeadlineLeft[_leftpoint5].transform.position + (Vector2)DeadlineRight[_rightpoint5].transform.position + new Vector2(0,0.5f)),
+            (-(Vector2)DeadlineLeft[_leftpoint5].transform.position + (Vector2)DeadlineRight[_rightpoint5].transform.position - new Vector2(0,0.5f)),
+};
+
+        _rightline6 = new Vector2[]
+{
+            ( - new Vector2(0,0.5f)),
+            (new Vector2(0,0.5f)),
+            (-(Vector2)DeadlineLeft[_leftpoint6].transform.position + (Vector2)DeadlineRight[_rightpoint6].transform.position + new Vector2(0,0.5f)),
+            (-(Vector2)DeadlineLeft[_leftpoint6].transform.position + (Vector2)DeadlineRight[_rightpoint6].transform.position - new Vector2(0,0.5f)),
 };
 
         Rightcollider[_rightpoint1].points = _rightline1;
         Rightcollider[_rightpoint2].points = _rightline2;
         Rightcollider[_rightpoint3].points = _rightline3;
         Rightcollider[_rightpoint4].points = _rightline4;
+        Leftcollider[_rightpoint5].points = _rightline5;
+        Leftcollider[_rightpoint6].points = _rightline6;
 
 
         Rightcollider[_rightpoint1].enabled = true;
         Rightcollider[_rightpoint2].enabled = true;
         Rightcollider[_rightpoint3].enabled = true;
         Rightcollider[_rightpoint4].enabled = true;
+        Leftcollider[_rightpoint5].enabled = true;
+        Leftcollider[_rightpoint6].enabled = true;
+
 
     }
     private void ResetMaterial()
@@ -547,10 +656,14 @@ public class PointSetting_const : MonoBehaviour
         UpperLine[_upperpoint4].material = red;
         UpperLine[_upperpoint5].material = red;
         UpperLine[_upperpoint6].material = red;
+        LowerLine[_upperpoint7].material = red;
+        LowerLine[_upperpoint8].material = red;
         RightLine[_rightpoint1].material = red;
         RightLine[_rightpoint2].material = red;
         RightLine[_rightpoint3].material = red;
         RightLine[_rightpoint4].material = red;
+        LeftLine[_rightpoint5].material = red;
+        LeftLine[_rightpoint6].material = red;
         ResetPos();
     }
     void fadecollider()
@@ -561,11 +674,15 @@ public class PointSetting_const : MonoBehaviour
         Uppercollider[_upperpoint4].enabled = false;
         Uppercollider[_upperpoint5].enabled = false;
         Uppercollider[_upperpoint6].enabled = false;
+        Lowercollider[_upperpoint7].enabled = false;
+        Lowercollider[_upperpoint8].enabled = false;
 
         Rightcollider[_rightpoint1].enabled = false;
         Rightcollider[_rightpoint2].enabled = false;
         Rightcollider[_rightpoint3].enabled = false;
         Rightcollider[_rightpoint4].enabled = false;
+        Leftcollider[_rightpoint5].enabled = false;
+        Leftcollider[_rightpoint6].enabled = false;
     }
     public void minusColor()
     {
@@ -580,10 +697,15 @@ public class PointSetting_const : MonoBehaviour
         UpperLine[_upperpoint4].material = white;
         UpperLine[_upperpoint5].material = white;
         UpperLine[_upperpoint6].material = white;
+        LowerLine[_upperpoint7].material = white;
+        LowerLine[_upperpoint8].material = white;
         RightLine[_rightpoint1].material = white;
         RightLine[_rightpoint2].material = white;
         RightLine[_rightpoint3].material = white;
         RightLine[_rightpoint4].material = white;
+        LeftLine[_rightpoint5].material = white;
+        LeftLine[_rightpoint6].material = white;
+
     }
     void CursorOn()
     {
@@ -631,6 +753,7 @@ public class PointSetting_const : MonoBehaviour
     }
     void Anten()
     {
+        CanMoveBall = false;
         image.color = new Color(0, 0, 0, 1f);
         isAnten = true;
     }
