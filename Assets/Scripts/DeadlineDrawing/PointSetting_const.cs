@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 
 public class PointSetting_const : MonoBehaviour
 {
+    [SerializeField] SendToServer _SendToServer;
     private bool isAnten = false;
     public int collidetime = 0;
     [SerializeField] Transform DeadlineSize;
@@ -35,7 +36,6 @@ public class PointSetting_const : MonoBehaviour
     [SerializeField] int AppearLine = 4;
     [SerializeField] MoveCursor2 _MoveCursor;
     private bool isSettingTriger = false;
-    private bool isSettingTriger2 = false;
     [SerializeField] GameObject RightCursor;
     [SerializeField] GameObject LeftCursor;
     [SerializeField] GameObject RopeParent;
@@ -236,15 +236,19 @@ public class PointSetting_const : MonoBehaviour
             Invoke(nameof(RestartTracing), 1.0f);
 
         }
-        if (isAnten) AddAnten();
-        if (isSettingTriger2)
+        /*if (isAnten) AddAnten();
+        if (isSettingTriger)
         {
             isSettingTriger = false;
-            isSettingTriger2 = false;
             fadecollider();
             if (_MoveCursor.CollideDeadline)
             {
                 collidetime += 1;
+                for (int i = 0; i < (_SendToServer.TrialList.Count - _SendToServer.SucceededList.Count); i++)
+                {
+                    _SendToServer.SucceededList.Add(false);
+                }
+                Debug.Log(_SendToServer.TrialList.Count == _SendToServer.SucceededList.Count);
                 _MoveCursor.CollideDeadline = false;
                 Invoke(nameof(CursorOff), 0.3f);
                 Invoke(nameof(CursorOn), 0.4f);
@@ -253,16 +257,21 @@ public class PointSetting_const : MonoBehaviour
                 Invoke(nameof(CursorOff), 0.7f);
                 Invoke(nameof(CursorOn), 0.8f);
             }
+            else
+            {
+                for (int i = 0; i < (_SendToServer.TrialList.Count - _SendToServer.SucceededList.Count); i++)
+                {
+                    _SendToServer.SucceededList.Add(true);
+                }
+
+                Debug.Log(_SendToServer.TrialList.Count == _SendToServer.SucceededList.Count);
+            }
         }
 
-        if (isSettingTriger)
-        {
-            isSettingTriger2 = true;
-        }
 
         if (_MoveTarget.isTracing)
         {
-            if (_MoveTarget.RestTime % 4 < AppearLine - 1)
+            if (_MoveTarget.RestTime % 4 < AppearLine - 1 && !_MoveTarget.isFinishied)
             {
                 if (!isSettingline)
                 {
@@ -275,6 +284,16 @@ public class PointSetting_const : MonoBehaviour
                     minusColor();
                     //setCollider();
                 }
+                /*_SendToServer.TrialList.Add(IgniteTime - 1);
+                _SendToServer.RestTimeList.Add(_MoveTarget.RestTime % 4);
+                _SendToServer.LeftInputList.Add((Input.GetKey(KeyCode.W)) ? 1 : ((Input.GetKey(KeyCode.S)) ? -1 : 0));
+                _SendToServer.RightInputList.Add((Input.GetKey(KeyCode.UpArrow)) ? 1 : ((Input.GetKey(KeyCode.DownArrow)) ? -1 : 0));
+                _SendToServer.LeftPosList.Add(LeftCursor.transform.position);
+                _SendToServer.RightPosList.Add(RightCursor.transform.position);
+                _SendToServer.TargetPosList.Add(Cursor.transform.position);
+                _SendToServer.LineNumList.Add(Ignitenumbers[IgniteTime - 1]);
+                _SendToServer.ErrorNumList.Add(collidetime);
+
             }
             else if (_MoveTarget.RestTime % 4 > 3f && _MoveTarget.RestTime < 37 && isSettingline)
             {
@@ -298,15 +317,111 @@ public class PointSetting_const : MonoBehaviour
             setCollider();
             isSettingTriger = true;
             Invoke(nameof(ResetMaterial), 0.2f);
-            Invoke(nameof(UpdateUI),0.25f);
+            Invoke(nameof(UpdateUI),0.4f);
+        }*/
+
+    }
+    void FixedUpdate()
+    {
+        if (isAnten) AddAnten();
+        if (isSettingTriger)
+        {
+            isSettingTriger = false;
+            fadecollider();
+            if (_MoveCursor.CollideDeadline)
+            {
+                collidetime += 1;
+                int j = _SendToServer.TrialList.Count - _SendToServer.SucceededList.Count;
+                for (int i = 0; i < j; i++)
+                {
+                    _SendToServer.SucceededList.Add(false);
+                }
+_MoveCursor.CollideDeadline = false;
+                Invoke(nameof(CursorOff), 0.3f);
+                Invoke(nameof(CursorOn), 0.4f);
+                Invoke(nameof(CursorOff), 0.5f);
+                Invoke(nameof(CursorOn), 0.6f);
+                Invoke(nameof(CursorOff), 0.7f);
+                Invoke(nameof(CursorOn), 0.8f);
+            }
+            else
+            {
+                int j = _SendToServer.TrialList.Count - _SendToServer.SucceededList.Count;
+                for (int i = 0; i < j; i++)
+                {
+                    _SendToServer.SucceededList.Add(true);
+                }
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.K)) setline(0);
-        if (Input.GetKeyDown(KeyCode.L)) fadeline();
+
+        if (_MoveTarget.isTracing)
+        {
+            if (_MoveTarget.RestTime % 4 < AppearLine - 1 && !_MoveTarget.isFinishied)
+            {
+                if (!isSettingline)
+                {
+                    setline(Ignitenumbers[IgniteTime]);
+                    IgniteTime += 1;
+                    isSettingline = true;
+                }
+                else
+                {
+                    minusColor();
+                    //setCollider();
+                }
+                _SendToServer.TrialList.Add(IgniteTime - 1);
+                _SendToServer.RestTimeList.Add(_MoveTarget.RestTime % 4);
+                _SendToServer.LeftInputList.Add((Input.GetKey(KeyCode.W)) ? 1 : ((Input.GetKey(KeyCode.S)) ? -1 : 0));
+                _SendToServer.RightInputList.Add((Input.GetKey(KeyCode.UpArrow)) ? 1 : ((Input.GetKey(KeyCode.DownArrow)) ? -1 : 0));
+                _SendToServer.LeftPosList.Add(LeftCursor.transform.position);
+                _SendToServer.RightPosList.Add(RightCursor.transform.position);
+                _SendToServer.TargetPosList.Add(Cursor.transform.position);
+                _SendToServer.LineNumList.Add(Ignitenumbers[IgniteTime - 1]);
+                _SendToServer.ErrorNumList.Add(collidetime);
+
+            }
+            else if (_MoveTarget.RestTime % 4 > 3f && _MoveTarget.RestTime < 37 && isSettingline)
+            {
+                _MoveTarget.isTracing = false;
+                setCollider();
+                Ignition();
+                isSettingline = false;
+                isSettingTriger = true;
+                Invoke(nameof(ResetMaterial), 0.2f);
+                Invoke(nameof(Anten), 0.2f);
+                Invoke(nameof(RestartTracing), 1.2f);
+            }
+
+        }
+
+        if (_MoveTarget.isFinishied)
+        {
+            _MoveTarget.isFinishied = false;
+            Ignition();
+            isSettingline = false;
+            setCollider();
+            isSettingTriger = true;
+            Invoke(nameof(ResetMaterial), 0.2f);
+            Invoke(nameof(UpdateUI), 0.4f);
+        }
+
     }
+
     void UpdateUI()
     {
         _collisionUI.text = collidetime.ToString();
+        _SendToServer.TrialList.Add(10);
+        _SendToServer.RestTimeList.Add(0);
+        _SendToServer.LeftInputList.Add(0);
+        _SendToServer.RightInputList.Add(0);
+        _SendToServer.LeftPosList.Add(Vector2.zero);
+        _SendToServer.RightPosList.Add(Vector2.zero);
+        _SendToServer.TargetPosList.Add(Vector2.zero);
+        _SendToServer.LineNumList.Add(10);
+        _SendToServer.ErrorNumList.Add(collidetime);
+        _SendToServer.SucceededList.Add(false);
+        _SendToServer.WritingToServer();
     }
     void SpawnChild()
     {
