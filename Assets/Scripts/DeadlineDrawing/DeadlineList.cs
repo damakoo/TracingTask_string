@@ -88,7 +88,7 @@ public static class DeadlineList
     };
     public static List<int> rightpoints5 = new List<int>
     {
-        1,1,1,1,1,1,1,1,1,1
+        0,0,0,0,0,0,0,0,0,0
     };
     public static List<int> rightpoints6 = new List<int>
     {
