@@ -61,7 +61,7 @@ public class MoveTarget : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(Input.GetKeyDown(KeyCode.Space) && !isTracing)
         {
@@ -74,37 +74,37 @@ public class MoveTarget : MonoBehaviour
         if(isTracing)
         {
             RestTime -= Time.deltaTime;
-            float distancenow = Vector3.Magnitude(this.transform.position - Cursor.transform.position);
-            Distance.Add(distancenow);
-            inTarget.Add(distancenow<=distance_radius);
-            float nowTime = SettingTime - RestTime;
-            this.transform.position = new Vector3(f_x(nowTime), f_y(nowTime), 0);
-            Child.transform.position = new Vector3(f_x(nowTime), f_y(nowTime), 0);
+            //float distancenow = Vector3.Magnitude(this.transform.position - Cursor.transform.position);
+            //Distance.Add(distancenow);
+            //inTarget.Add(distancenow<=distance_radius);
+            //float nowTime = SettingTime - RestTime;
+            //this.transform.position = new Vector3(f_x(nowTime), f_y(nowTime), 0);
+            //Child.transform.position = new Vector3(f_x(nowTime), f_y(nowTime), 0);
             if (RestTime < 0)
             {
                 isTracing = false;
-                this.transform.position = new Vector3(0,0,0);
+                //this.transform.position = new Vector3(0,0,0);
                 RestTime = SettingTime;
-                _SpriteRenderer.enabled = false;
-                _ChildSpriteRenderer.enabled = false;
+                //_SpriteRenderer.enabled = false;
+                //_ChildSpriteRenderer.enabled = false;
                 Canbus.SetActive(true);
-                InTargetGUI.text = average_intarget().ToString();
-                DistanceGUI.text = average_distance().ToString();
-                inTarget = new List<bool>();
-                Distance = new List<float>();
+                //InTargetGUI.text = average_intarget().ToString();
+                //DistanceGUI.text = average_distance().ToString();
+                //inTarget = new List<bool>();
+                //Distance = new List<float>();
                 isFinishied = true;
             }
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
             isTracing = false;
-            this.transform.position = new Vector3(0, 0, 0);
-            Child.transform.position = new Vector3(0, 0, 0);
+            //this.transform.position = new Vector3(0, 0, 0);
+            //Child.transform.position = new Vector3(0, 0, 0);
             RestTime = SettingTime;
-            _SpriteRenderer.enabled = true;
-            _ChildSpriteRenderer.enabled = true;
-            inTarget = new List<bool>();
-            Distance = new List<float>();
+            //_SpriteRenderer.enabled = true;
+            //_ChildSpriteRenderer.enabled = true;
+            //inTarget = new List<bool>();
+            //Distance = new List<float>();
         }
     }
 }
