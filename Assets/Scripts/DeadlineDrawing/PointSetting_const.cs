@@ -52,8 +52,18 @@ public class PointSetting_const : MonoBehaviour
     List<int> numbers = new List<int>();
     List<int> Ignitenumbers = new List<int>();
     public bool CanMoveBall = true;
+    [SerializeField] GameObject whiteUi;
+    [SerializeField] GameObject redUi;
 
-    [SerializeField] TextMeshProUGUI _collisionUI;
+    [SerializeField] float resttime = 6;
+    [SerializeField] float showwhitetime = 4;
+    private float nowresttime = 0;
+    private bool isResting = false;
+    private bool beappearui = false;
+    private bool befadewhiteui = false;
+    private bool befaderedui = false;
+
+[SerializeField] TextMeshProUGUI _collisionUI;
     private Vector2[] _upperline1 = new Vector2[]
     {
         Vector2.zero,
@@ -205,6 +215,8 @@ public class PointSetting_const : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        whiteUi.SetActive(false);
+        redUi.SetActive(false);
         RopeInitialize();
         Initialize();
         _collisionUI.text = "";
@@ -231,10 +243,7 @@ public class PointSetting_const : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && !_MoveTarget.isTracing)
         {
-            ResetMaterial();
-            Anten();
-            Invoke(nameof(RestartTracing), 1.0f);
-
+            isResting = true;
         }
         /*if (isAnten) AddAnten();
         if (isSettingTriger)
@@ -337,12 +346,12 @@ public class PointSetting_const : MonoBehaviour
                     _SendToServer.SucceededList.Add(false);
                 }
 _MoveCursor.CollideDeadline = false;
-                Invoke(nameof(CursorOff), 0.3f);
-                Invoke(nameof(CursorOn), 0.4f);
-                Invoke(nameof(CursorOff), 0.5f);
-                Invoke(nameof(CursorOn), 0.6f);
-                Invoke(nameof(CursorOff), 0.7f);
-                Invoke(nameof(CursorOn), 0.8f);
+                //Invoke(nameof(CursorOff), 0.3f);
+                //Invoke(nameof(CursorOn), 0.4f);
+                //Invoke(nameof(CursorOff), 0.5f);
+                //Invoke(nameof(CursorOn), 0.6f);
+                //Invoke(nameof(CursorOff), 0.7f);
+                //Invoke(nameof(CursorOn), 0.8f);
             }
             else
             {
@@ -357,7 +366,7 @@ _MoveCursor.CollideDeadline = false;
 
         if (_MoveTarget.isTracing)
         {
-            if (_MoveTarget.RestTime % 4 < AppearLine - 1 && !_MoveTarget.isFinishied)
+            if (_MoveTarget.RestTime % 5 < AppearLine - 1 && !_MoveTarget.isFinishied)
             {
                 if (!isSettingline)
                 {
@@ -381,16 +390,14 @@ _MoveCursor.CollideDeadline = false;
                 _SendToServer.ErrorNumList.Add(collidetime);
 
             }
-            else if (_MoveTarget.RestTime % 4 > 3f && _MoveTarget.RestTime < 37 && isSettingline)
+            else if (_MoveTarget.RestTime % 5 > 4f && _MoveTarget.RestTime < 47 && isSettingline)
             {
                 _MoveTarget.isTracing = false;
                 setCollider();
                 Ignition();
                 isSettingline = false;
                 isSettingTriger = true;
-                Invoke(nameof(ResetMaterial), 0.2f);
-                Invoke(nameof(Anten), 0.2f);
-                Invoke(nameof(RestartTracing), 1.2f);
+                isResting = true;
             }
 
         }
@@ -402,10 +409,41 @@ _MoveCursor.CollideDeadline = false;
             isSettingline = false;
             setCollider();
             isSettingTriger = true;
-            Invoke(nameof(ResetMaterial), 0.2f);
+            Invoke(nameof(ResetMaterial),0.2f);
             Invoke(nameof(UpdateUI), 0.4f);
         }
 
+        if (isResting)
+        {
+            nowresttime += Time.fixedDeltaTime;
+            if(nowresttime > 0.2f && !beappearui)
+            {
+                beappearui = true;
+                whiteUi.SetActive(true);
+                redUi.SetActive(true);
+                ResetMaterial();
+            }
+            else if (nowresttime > 0.2f + showwhitetime && !befadewhiteui)
+            {
+                befadewhiteui = true;
+                whiteUi.SetActive(false);
+            }
+            else if (nowresttime > 0.2f + resttime && !befaderedui)
+            {
+                befaderedui = true;
+                Anten();
+                redUi.SetActive(false);
+            }
+            else if (nowresttime > 1.2f + resttime)
+            {
+                RestartTracing();
+                isResting = false;
+                beappearui = false;
+                befadewhiteui = false;
+                befaderedui = false;
+                nowresttime = 0;
+            }
+        }
     }
 
     void UpdateUI()
@@ -761,7 +799,7 @@ _MoveCursor.CollideDeadline = false;
 
 
     }
-    private void ResetMaterial()
+    void ResetMaterial()
     {
         fadeline();
         red.color = new Color(255, 0, 0, defaultcolor);
