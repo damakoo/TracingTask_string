@@ -913,7 +913,7 @@ _MoveCursor.CollideDeadline = false;
     void AddAnten()
     {
         float a = image.color.a;
-        image.color = new Color(0, 0, 0, a - Time.deltaTime);
+        image.color = new Color(0, 0, 0, 0);
     }
     void RestartTracing()
     {
