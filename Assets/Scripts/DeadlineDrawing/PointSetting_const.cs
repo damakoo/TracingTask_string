@@ -54,7 +54,7 @@ public class PointSetting_const : MonoBehaviour
     public bool CanMoveBall = true;
     [SerializeField] GameObject whiteUi;
     [SerializeField] GameObject redUi;
-
+    [SerializeField] TextMeshProUGUI OneResult;
     [SerializeField] float resttime = 6;
     [SerializeField] float showwhitetime = 4;
     private float nowresttime = 0;
@@ -221,9 +221,10 @@ public class PointSetting_const : MonoBehaviour
         Initialize();
         _collisionUI.text = "";
         SpawnChild();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
-            numbers.Add(i);
+            //numbers.Add(i);
+            numbers.Add(1);
         }
 
         while (numbers.Count > 0)
@@ -339,13 +340,14 @@ public class PointSetting_const : MonoBehaviour
             fadecollider();
             if (_MoveCursor.CollideDeadline)
             {
+                OneResult.text = "Failed";
                 collidetime += 1;
                 int j = _SendToServer.TrialList.Count - _SendToServer.SucceededList.Count;
                 for (int i = 0; i < j; i++)
                 {
                     _SendToServer.SucceededList.Add(false);
                 }
-_MoveCursor.CollideDeadline = false;
+            _MoveCursor.CollideDeadline = false;
                 //Invoke(nameof(CursorOff), 0.3f);
                 //Invoke(nameof(CursorOn), 0.4f);
                 //Invoke(nameof(CursorOff), 0.5f);
@@ -355,6 +357,7 @@ _MoveCursor.CollideDeadline = false;
             }
             else
             {
+                OneResult.text = "Succeeded";
                 int j = _SendToServer.TrialList.Count - _SendToServer.SucceededList.Count;
                 for (int i = 0; i < j; i++)
                 {
