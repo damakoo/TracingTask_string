@@ -10563,7 +10563,7 @@ MonoBehaviour:
   redUi: {fileID: 383918744}
   OneResult: {fileID: 1851760386}
   resttime: 6
-  showwhitetime: 4
+  showwhitetime: 4.5
   _collisionUI: {fileID: 1288882588}
   Number_rightleft: 10
   Number_updown: 20
@@ -12166,7 +12166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4656ae6ff2d4b9998d75de9b558fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingTime: 50
+  SettingTime: 100
   Cursor: {fileID: 525696886}
   Canbus: {fileID: 2097468362}
   Child: {fileID: 1813064702}

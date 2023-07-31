@@ -224,7 +224,7 @@ public class PointSetting_const : MonoBehaviour
         for (int i = 0; i < 20; i++)
         {
             //numbers.Add(i);
-            numbers.Add(1);
+            numbers.Add(i);
         }
 
         while (numbers.Count > 0)
@@ -393,7 +393,7 @@ public class PointSetting_const : MonoBehaviour
                 _SendToServer.ErrorNumList.Add(collidetime);
 
             }
-            else if (_MoveTarget.RestTime % 5 > 4f && _MoveTarget.RestTime < 47 && isSettingline)
+            else if (_MoveTarget.RestTime % 5 > 4f && _MoveTarget.RestTime < 97 && isSettingline)
             {
                 _MoveTarget.isTracing = false;
                 setCollider();
@@ -451,7 +451,7 @@ public class PointSetting_const : MonoBehaviour
 
     void UpdateUI()
     {
-        _collisionUI.text = collidetime.ToString();
+        _collisionUI.text = "Success : " + (20 - collidetime).ToString() + "/20";
         _SendToServer.TrialList.Add(10);
         _SendToServer.RestTimeList.Add(0);
         _SendToServer.LeftInputList.Add(0);
@@ -459,7 +459,7 @@ public class PointSetting_const : MonoBehaviour
         _SendToServer.LeftPosList.Add(Vector2.zero);
         _SendToServer.RightPosList.Add(Vector2.zero);
         _SendToServer.TargetPosList.Add(Vector2.zero);
-        _SendToServer.LineNumList.Add(10);
+        _SendToServer.LineNumList.Add(100);
         _SendToServer.ErrorNumList.Add(collidetime);
         _SendToServer.SucceededList.Add(false);
         _SendToServer.WritingToServer();
@@ -582,19 +582,19 @@ public class PointSetting_const : MonoBehaviour
         //_lowerpoint4 = Random.Range((int)Number_updown / 2, Number_updown);
         //_lowerpoint5 = _upperpoint5;
 
-        _upperpoint1 = DeadlineList.upperpoints1[i];
-        _upperpoint2 = DeadlineList.upperpoints2[i];
-        _upperpoint3 = DeadlineList.upperpoints3[i];
-        _upperpoint4 = DeadlineList.upperpoints4[i];
-        _upperpoint5 = DeadlineList.upperpoints5[i];
-        _upperpoint6 = DeadlineList.upperpoints6[i];
-        _upperpoint7 = DeadlineList.upperpoints7[i];
-        _upperpoint8 = DeadlineList.upperpoints8[i];
+        _upperpoint1 = DeadlineList2.upperpoints1[i];
+        _upperpoint2 = DeadlineList2.upperpoints2[i];
+        _upperpoint3 = DeadlineList2.upperpoints3[i];
+        _upperpoint4 = DeadlineList2.upperpoints4[i];
+        _upperpoint5 = DeadlineList2.upperpoints5[i];
+        _upperpoint6 = DeadlineList2.upperpoints6[i];
+        _upperpoint7 = DeadlineList2.upperpoints7[i];
+        _upperpoint8 = DeadlineList2.upperpoints8[i];
 
-        _lowerpoint1 = DeadlineList.lowerpoints1[i];
-        _lowerpoint2 = DeadlineList.lowerpoints2[i];
-        _lowerpoint3 = DeadlineList.lowerpoints3[i];
-        _lowerpoint4 = DeadlineList.lowerpoints4[i];
+        _lowerpoint1 = DeadlineList2.lowerpoints1[i];
+        _lowerpoint2 = DeadlineList2.lowerpoints2[i];
+        _lowerpoint3 = DeadlineList2.lowerpoints3[i];
+        _lowerpoint4 = DeadlineList2.lowerpoints4[i];
         _lowerpoint5 = _upperpoint5;
         _lowerpoint6 = _upperpoint6;
         _lowerpoint7 = _upperpoint7;
@@ -627,17 +627,17 @@ public class PointSetting_const : MonoBehaviour
         LowerLine[_upperpoint8].SetPosition(1, DeadlineLower[_lowerpoint8].transform.position);
 
 
-        _rightpoint1 = DeadlineList.rightpoints1[i];
-        _rightpoint2 = DeadlineList.rightpoints2[i];
-        _rightpoint3 = DeadlineList.rightpoints3[i];
-        _rightpoint4 = DeadlineList.rightpoints4[i];
-        _rightpoint5 = DeadlineList.rightpoints5[i];
-        _rightpoint6 = DeadlineList.rightpoints6[i];
+        _rightpoint1 = DeadlineList2.rightpoints1[i];
+        _rightpoint2 = DeadlineList2.rightpoints2[i];
+        _rightpoint3 = DeadlineList2.rightpoints3[i];
+        _rightpoint4 = DeadlineList2.rightpoints4[i];
+        _rightpoint5 = DeadlineList2.rightpoints5[i];
+        _rightpoint6 = DeadlineList2.rightpoints6[i];
 
-        _leftpoint1 = DeadlineList.leftpoints1[i];
-        _leftpoint2 = DeadlineList.leftpoints2[i];
-        _leftpoint3 = DeadlineList.leftpoints3[i];
-        _leftpoint4 = DeadlineList.leftpoints4[i];
+        _leftpoint1 = DeadlineList2.leftpoints1[i];
+        _leftpoint2 = DeadlineList2.leftpoints2[i];
+        _leftpoint3 = DeadlineList2.leftpoints3[i];
+        _leftpoint4 = DeadlineList2.leftpoints4[i];
         _leftpoint5 = _rightpoint5;
         _leftpoint6 = _rightpoint6;
 
